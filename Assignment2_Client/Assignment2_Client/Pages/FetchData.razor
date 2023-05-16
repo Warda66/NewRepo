@@ -1,0 +1,46 @@
+﻿@using sharedModel;
+@page "/fetchdata"
+@inject HttpClient Http
+
+<PageTitle>Weather forecast</PageTitle>
+
+<h1>Student Data</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (std == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Roll Number</th>
+                <th>Name</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var std in std)
+            {
+                <tr>
+                    <td>@std.Rollnumber</td>
+                    <td>@std.Name</td>
+                   
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    StdClass[]? std;
+    async void getstd()
+    {
+        std = await Http.GetFromJsonAsync<StdClass[]>("/StdClass");
+        StateHasChanged();
+    }
+
+}
